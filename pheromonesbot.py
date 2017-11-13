@@ -55,7 +55,7 @@ def pheromones(bot, update):
     logger.debug('Called with weekday %d and spawn %s' % (weekday, spawn))
     update.message.reply_text(
         "Pheromones spawn type is currently *%s*. Spawn changes in %s." % (
-            spawn, format_timedelta(time_until_end_of_day)),
+            spawn, format_timedelta(time_until_end_of_day())),
         parse_mode=ParseMode.MARKDOWN)
 
 
