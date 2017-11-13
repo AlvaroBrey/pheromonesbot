@@ -4,6 +4,7 @@
 # Pheromones Bot
 
 import logging
+import calendar
 from datetime import datetime
 import pytz
 from telegram.ext import Updater, CommandHandler
@@ -37,6 +38,13 @@ def pheromones(bot, update):
         parse_mode=ParseMode.MARKDOWN)
 
 
+def list(bot, update):
+    msg = ""
+    for key, value in TYPES_MAP.items():
+        msg += "%s: %s" % (calendar.day_name[key], value)
+    update.message.reply_text(msg)
+
+
 def help(bot, update):
     update.message.reply_text(
         'Usage: /pheromones', quote=True)
@@ -55,6 +63,8 @@ def main():
         dp = updater.dispatcher
 
         dp.add_handler(CommandHandler("pheromones", pheromones))
+
+        dp.add_handler(CommandHandler("list", list))
 
         dp.add_handler(CommandHandler("help", help))
 
