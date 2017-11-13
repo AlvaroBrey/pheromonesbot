@@ -12,14 +12,21 @@ from telegram import ParseMode
 
 TIMEZONE_STR = 'Europe/Kiev'
 TIMEZONE = timezone(TIMEZONE_STR)
+TYPES = {
+    "EARTH": "Earth 🍃",
+    "WIND": "Wind 🌪",
+    "WATER": "Water 💧",
+    "FIRE": "Fire 🔥",
+    "ARCANA": "Arcana 🦄"
+}
 TYPES_MAP = {
-    0: "Wind",
-    1: "Water",
-    2: "Fire",
-    3: "Earth",
-    4: "Arcana",
-    5: "Earth",
-    6: "Earth"
+    0: TYPES["WIND"],
+    1: TYPES["WATER"],
+    2: TYPES["FIRE"],
+    3: TYPES["EARTH"],
+    4: TYPES["ARCANA"],
+    5: TYPES["EARTH"],
+    6: TYPES["EARTH"]
 }
 
 # Enable logging
