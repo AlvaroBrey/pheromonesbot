@@ -49,7 +49,7 @@ def error(bot, update, error):
 def main():
 
     with open("bot_id.txt", "r") as token_file:
-        bot_token = token_file.read()
+        bot_token = token_file.read().replace('\r', '').replace('\n', '')
         updater = Updater(bot_token)
 
         dp = updater.dispatcher
