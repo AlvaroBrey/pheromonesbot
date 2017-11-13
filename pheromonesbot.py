@@ -5,8 +5,8 @@
 
 import logging
 import calendar
-from datetime import datetime, timedelta, timezone
-import pytz import timezone
+from datetime import datetime, timedelta
+from pytz import timezone
 from telegram.ext import Updater, CommandHandler
 from telegram import ParseMode
 
