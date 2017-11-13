@@ -5,13 +5,13 @@
 
 import logging
 import calendar
-from datetime import datetime
-import pytz
+from datetime import datetime, timedelta, timezone
+import pytz import timezone
 from telegram.ext import Updater, CommandHandler
 from telegram import ParseMode
 
 TIMEZONE_STR = 'Europe/Kiev'
-TIMEZONE = pytz.timezone(TIMEZONE_STR)
+TIMEZONE = timezone(TIMEZONE_STR)
 TYPES_MAP = {
     0: "Wind",
     1: "Water",
@@ -29,12 +29,33 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
+def get_ukraine_datetime():
+    return datetime.now(TIMEZONE)
+
+
+def time_until_end_of_day():
+    dt = get_ukraine_datetime()
+    tomorrow = dt + timedelta(days=1)
+    midnight = datetime(year=tomorrow.year, month=tomorrow.month,
+                        day=tomorrow.day, hour=0, minute=0, second=0)
+    midnight = TIMEZONE.localize(midnight)
+    return midnight - dt
+
+
+def format_timedelta(delta):
+    total_seconds = int(delta.total_seconds())
+    hours, remainder = divmod(total_seconds, 60 * 60)
+    minutes, seconds = divmod(remainder, 60)
+    return '%d hours, %d minutes and %d seconds' % (hours, minutes, seconds)
+
+
 def pheromones(bot, update):
-    weekday = TIMEZONE.localize(datetime.utcnow()).weekday()
+    weekday = get_ukraine_datetime().weekday()
     spawn = TYPES_MAP.get(weekday)
     logger.debug('Called with weekday %d and spawn %s' % (weekday, spawn))
     update.message.reply_text(
-        "Pheromones spawn is currently *%s*." % spawn,
+        "Pheromones spawn type is currently *%s*. Spawn changes in %s." % (
+            spawn, format_timedelta(time_until_end_of_day)),
         parse_mode=ParseMode.MARKDOWN)
 
 
