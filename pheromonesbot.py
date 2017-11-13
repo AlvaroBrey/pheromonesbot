@@ -41,7 +41,7 @@ def pheromones(bot, update):
 def list(bot, update):
     msg = ""
     for key, value in TYPES_MAP.items():
-        msg += "%s: %s" % (calendar.day_name[key], value)
+        msg += "%s: %s\n" % (calendar.day_name[key], value)
     update.message.reply_text(msg)
 
 
